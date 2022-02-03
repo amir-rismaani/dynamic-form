@@ -1,22 +1,24 @@
 <template>
-  <v-text-field
-    :label="attr.label"
-    :data-testid="`input-${attr.name}`"
-    :value="attr.value"
-    :name="attr.name"
-    :ref="attr.ref"
-    :required="attr.required"
-  ></v-text-field>
+  <div>
+    <v-text-field
+      v-model="inputValue"
+      @input="sendInputValue"
+      @change="sendRef"
+      :label="attr.label"
+      :data-testid="`input-${attr.name}`"
+      :value="attr.value"
+      :name="attr.name"
+      :ref="attr.name"
+      :required="attr.required"
+    ></v-text-field>
+  </div>
 </template>
 
 <script>
+import utility from "../mixins/utility";
+
 export default {
-  props: {
-    attr: {
-      type: Object,
-      require: true,
-    },
-  },
+  mixins: [utility],
 };
 </script>
 

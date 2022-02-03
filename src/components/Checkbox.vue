@@ -1,22 +1,19 @@
 <template>
   <v-checkbox
+    v-model="inputValue"
+    @change="chageItem"
     :label="attr.label"
     :data-testid="`input-${attr.name}`"
     :value="attr.value"
     :name="attr.name"
-    :ref="attr.ref"
-    :required="attr.required"
+    :ref="attr.name"
   ></v-checkbox>
 </template>
 
 <script>
+import utility from "../mixins/utility";
 export default {
-  props: {
-    attr: {
-      type: Object,
-      require: true,
-    },
-  },
+  mixins: [utility],
 };
 </script>
 

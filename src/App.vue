@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import { formData } from "./data/formData";
 import FormItem from "./components/FormItem.vue";
 export default {
@@ -24,6 +25,9 @@ export default {
     fields: formData,
     //
   }),
+  computed: {
+    ...mapGetters(["getFormData"]),
+  },
 };
 </script>
 

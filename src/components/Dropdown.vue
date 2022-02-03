@@ -1,10 +1,12 @@
 <template>
   <v-select
+    v-model="inputValue"
+    @change="chageItem"
     :label="attr.label"
     :data-testid="`input-${attr.name}`"
     :value="attr.value"
     :name="attr.name"
-    :ref="attr.ref"
+    :ref="attr.name"
     :required="attr.required"
     :items="attr.options"
     item-text="title"
@@ -13,11 +15,14 @@
 </template>
 
 <script>
+import utility from "../mixins/utility";
+
 export default {
-  props: {
-    attr: {
-      type: Object,
-      require: true,
+  mixins: [utility],
+  methods: {
+    chageItem(value) {
+      this.sendInputValue(value);
+      this.forwardRef(this.$refs[this.attr.name]);
     },
   },
 };
