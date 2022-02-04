@@ -1,17 +1,16 @@
 <template>
-  <div>
-    <v-text-field
-      v-model="inputValue"
-      @input="sendInputValue"
-      @change="sendRef"
-      :label="attr.label"
-      :data-testid="`input-${attr.name}`"
-      :value="attr.value"
-      :name="attr.name"
-      :ref="attr.name"
-      :required="attr.required"
-    ></v-text-field>
-  </div>
+  <v-text-field
+    v-model="inputValue"
+    @input="sendInputValue"
+    @change="sendRef"
+    :label="attr.label"
+    :data-testid="`input-${attr.name}`"
+    :value="attr.value"
+    :name="attr.name"
+    :ref="attr.name"
+    :required="isRequired"
+    :rules="getRule"
+  ></v-text-field>
 </template>
 
 <script>

@@ -7,9 +7,10 @@
     :value="attr.value"
     :name="attr.name"
     :ref="attr.name"
-    :required="attr.required"
     :items="attr.options"
     item-text="title"
+    :required="isRequired"
+    :rules="getRule"
   >
   </v-select>
 </template>

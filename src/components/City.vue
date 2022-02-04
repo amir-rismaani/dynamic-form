@@ -1,16 +1,22 @@
 <template>
   <v-row>
-    <v-dialog v-model="dialog" scrollable max-width="300px">
+    <v-dialog v-model="dialog" scrollable max-width="300px" eager>
       <template v-slot:activator="{ on, attrs }">
-        <v-btn outlined block v-bind="attrs" v-on="on" :ref="attr.name">
-          انتخاب شهر
-        </v-btn>
+        <v-btn outlined block v-bind="attrs" v-on="on"> انتخاب شهر </v-btn>
+        {{ inputValue }}
       </template>
       <v-card>
         <v-card-title>انتخاب شهر</v-card-title>
         <v-divider></v-divider>
         <v-card-text style="height: 300px">
-          <v-radio-group v-model="inputValue" @change="chageItem" column>
+          <v-radio-group
+            v-model="inputValue"
+            @change="chageItem"
+            column
+            :ref="attr.name"
+            :required="isRequired"
+            :rules="getRule"
+          >
             <v-radio
               v-for="(value, key) in cities"
               :key="key"

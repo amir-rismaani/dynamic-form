@@ -7,6 +7,8 @@
     :name="attr.name"
     :label="attr.label"
     :ref="attr.name"
+    :required="isRequired"
+    :rules="getRule"
   ></v-textarea>
 </template>
 

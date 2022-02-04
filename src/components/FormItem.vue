@@ -1,15 +1,13 @@
 <template>
-  <v-row justify="center">
-    <v-col cols="4" class="form-item" :data-test-id="`form-item-${field.name}`">
-      <component
-        :is="fieldType"
-        :attr="field"
-        :ref="field.name"
-        @inputValue="setData"
-        @setRefs="handleRefs"
-      />
-    </v-col>
-  </v-row>
+  <v-col class="form-item" :data-test-id="`form-item-${field.name}`">
+    <component
+      :is="fieldType"
+      :attr="field"
+      :ref="field.name"
+      @inputValue="setData"
+      @setRefs="handleRefs"
+    />
+  </v-col>
 </template>
 
 <script>
@@ -20,11 +18,15 @@ import Dropdown from "./Dropdown.vue";
 import TextareaInput from "./TextreaInput.vue";
 import Checkbox from "./Checkbox.vue";
 import City from "./City.vue";
+
+import utility from "../mixins/utility";
+
 export default {
+  mixins: [utility],
   props: {
     field: {
       type: Object,
-      require: true,
+      required: true,
     },
   },
   components: { TextInput, Dropdown, Checkbox, TextareaInput, City },
@@ -58,10 +60,9 @@ export default {
           dependency.show.value
         ) {
           destinationRefId[1].display = true;
-          return true;
+        } else {
+          destinationRefId[1].display = false;
         }
-        destinationRefId[1].display = false;
-        return false;
       }
       if (dependency.required) {
         const dependentComponent = this.getComponentByRef(
@@ -73,12 +74,9 @@ export default {
           dependency.required.value
         ) {
           destinationRefId[1].required = true;
-          // console.log(destinationRefId[1].required);
-          return true;
+        } else {
+          destinationRefId[1].required = false;
         }
-        destinationRefId[1].required = false;
-        // console.log(destinationRefId[1].required);
-        return false;
       }
     },
     getComponentByRef(refs, ref) {
@@ -104,7 +102,4 @@ export default {
 </script>
 
 <style lang="sass">
-.v-label
-  right: 0 !important
-  left: auto !important
 </style>

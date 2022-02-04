@@ -1,9 +1,16 @@
+
+import errors from '../constants/Errors'
+import dictionary from '../constants/Dictionary'
+
 export default {
     data() {
         return {
             inputValue: null,
             display: false,
-            required: false
+            required: false,
+            rules: {
+                required: value => !!value || errors.Required,
+            }
         }
     },
     props: {
@@ -11,6 +18,18 @@ export default {
             type: Object,
             require: true,
         },
+    },
+    computed: {
+        ruleChecker() {
+            const dependency = this.attr.dependency || false;
+            return dependency && Object.prototype.hasOwnProperty.call(dependency, dictionary.Required)
+        },
+        isRequired() {
+            return this.required && this.ruleChecker
+        },
+        getRule() {
+            return this.isRequired ? [this.rules.required] : []
+        }
     },
     methods: {
         sendInputValue() {
@@ -24,6 +43,7 @@ export default {
             this.forwardRef(this.$refs[this.attr.name]);
         },
         forwardRef(ref) {
+            console.log(ref)
             this.$emit("setRefs", ref.form.$children);
         }
     }

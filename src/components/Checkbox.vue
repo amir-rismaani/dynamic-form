@@ -7,6 +7,8 @@
     :value="attr.value"
     :name="attr.name"
     :ref="attr.name"
+    :required="isRequired"
+    :rules="getRule"
   ></v-checkbox>
 </template>
 
