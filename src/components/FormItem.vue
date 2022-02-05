@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import { mapMutations } from "vuex";
 import FormType from "../constants/FormType";
 import TextInput from "./TextInput.vue";
 import Dropdown from "./Dropdown.vue";
@@ -84,7 +84,6 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(["getFormData"]),
     fieldType() {
       let type = this.field.type;
       switch (type) {

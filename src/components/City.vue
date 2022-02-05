@@ -2,8 +2,30 @@
   <v-row>
     <v-dialog v-model="dialog" scrollable max-width="300px" eager>
       <template v-slot:activator="{ on, attrs }">
-        <v-btn outlined block v-bind="attrs" v-on="on"> انتخاب شهر </v-btn>
-        {{ inputValue }}
+        <v-col class="pa-0">
+          <v-btn
+            :color="
+              formData[attr.dependency.required.name] && isInvalidCity
+                ? 'error'
+                : ''
+            "
+            outlined
+            block
+            v-bind="attrs"
+            v-on="on"
+          >
+            {{ cityLableButton }}
+          </v-btn>
+          <div
+            class="v-messages theme--light error--text"
+            v-if="formData[attr.dependency.required.name] && isInvalidCity"
+            role="alert"
+          >
+            <div class="v-messages__wrapper">
+              <div class="v-messages__message mt-1">این فیلد اجباری است</div>
+            </div>
+          </div>
+        </v-col>
       </template>
       <v-card>
         <v-card-title>انتخاب شهر</v-card-title>
@@ -23,6 +45,7 @@
               :data-testid="`city-modal-${key}`"
               :label="value"
               :value="parseInt(key)"
+              @change="selectedCity = value"
             ></v-radio>
           </v-radio-group>
         </v-card-text>
@@ -31,9 +54,7 @@
           <v-btn color="blue darken-1" text @click="dialog = false">
             بستن
           </v-btn>
-          <v-btn color="blue darken-1" text @click="dialog = false">
-            اعمال
-          </v-btn>
+          <v-btn color="blue darken-1" text @click="setCity"> اعمال </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -41,16 +62,33 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 import utility from "../mixins/utility";
 import { cities } from "../data/cities";
+import LabelTexts from "../constants/Labels";
+
 export default {
   mixins: [utility],
   data() {
     return {
       cities,
       dialog: false,
-      dialogm1: "",
+      selectedCity: LabelTexts.chooseCity,
+      cityLableButton: LabelTexts.chooseCity,
     };
+  },
+  computed: {
+    ...mapState(["formValidation", "formData"]),
+    isInvalidCity() {
+      return !this.formValidation && !this.inputValue;
+    },
+  },
+  methods: {
+    setCity() {
+      this.cityLableButton = this.selectedCity;
+      this.dialog = false;
+    },
   },
 };
 </script>

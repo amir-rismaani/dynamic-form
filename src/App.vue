@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapMutations, mapState } from "vuex";
 import { formData } from "./data/formData";
 import utility from "./mixins/utility";
 import FormItem from "./components/FormItem.vue";
@@ -33,14 +33,15 @@ export default {
     fields: formData,
   }),
   computed: {
-    ...mapGetters(["getFormData"]),
+    ...mapState(["formData"]),
   },
   methods: {
-    async submitForm() {
+    ...mapMutations(["setFormValidation"]),
+    submitForm() {
       const isValid = this.$refs.form.validate();
-
+      this.setFormValidation(isValid);
       if (isValid) {
-        alert("submited");
+        alert("submited: " + JSON.stringify(this.formData));
       }
     },
   },

@@ -43,7 +43,6 @@ export default {
             this.forwardRef(this.$refs[this.attr.name]);
         },
         forwardRef(ref) {
-            console.log(ref)
             this.$emit("setRefs", ref.form.$children);
         }
     }
